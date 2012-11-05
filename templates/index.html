@@ -68,7 +68,7 @@
 						<img alt="Nexus 4" src="/static/img/n4-product-hero.png">
 					</div>
 				</div>
-				<p><center><a href="#unsubscribe-modal" role="button" data-toggle="modal">Unsubscribe</a> | <a href="#donate-modal" role="button" data-toggle="modal">Donate</a></center></p>
+				<p><center><a href="#policy-modal" role="button" data-toggle="modal">Privacy policy</a> | <a href="#sms-modal" role="button" data-toggle="modal">Get notified by SMS</a> | <a href="#unsubscribe-modal" role="button" data-toggle="modal">Unsubscribe</a> | <a href="#contact-modal" role="button" data-toggle="modal">Contact</a> | <a href="#donate-modal" role="button" data-toggle="modal">Donate</a></center></p>
 			</div>
 		</div>
 		<div id="unsubscribe-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -109,6 +109,29 @@
 				</form>
 			</div>
 	</div>
+	<div id="sms-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3>Get notified by SMS!</h3>
+		</div>
+		
+			<div class="modal-body">
+				<p>Unfortunately, this website does not natively support SMS notifications. However, there are a couple (free!) options that you can use to have the notification forwarded to your phone. </p>
+				<h4>Option 1: IFTTT (Gmail users)</h4>
+				<p><a href="http://ifttt.com" target="_blank">IFTTT</a> (If This Then That) is an awesome service that lets you create automated connections between apps. For example, it can email you whenever an earthquake happens. In our case, we want it to send you a SMS when you receive an email from us.<p>
+				<p>We've already created a <a href="https://ifttt.com/recipes/67629" target="_blank">recipe</a> you can use. Just sign up for IFTTT, activate this recipe and you will be good to go!</p>
+				<h4>Option 2: Carrier Email to SMS</h4>
+				<p>Many carriers in North America provide a email address that will forward to your phone (e.g. 1234567890@pcs.rogers.com). This service normally comes at a fee* but from my experience (I'm with Rogers in Canada), this is what happens if you send an email to YourNumber@pcs.rogers.com:</p>
+				<ol>
+					<li>You receive a notification saying something like "You have mail, text 'Yes' to this message to read it"</li>
+					<li>If you text 'Yes' back, they will charge you the fee and send the actual contents of the message.</li>
+				</ol>
+				<p>Now if you aren't expecting any other emails at YourNumber@YourCarrier.com, you can register that email address on this site and when you receive the "You have mail" SMS, you know that it was probably this site and something is in stock! Voila, free SMS notifications for most carriers!</p>
+				<p><a href="http://en.wikipedia.org/wiki/List_of_SMS_gateways" target="_blank">Find your carrier on this page</a><p>
+				<p>*Please confirm with your carrier first. I cannot be held responsible for any charges incurred.</p>
+			</div>
+	</div>
+
 	<script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="/static/js/app.js" type="text/javascript"></script>
 	</script>
