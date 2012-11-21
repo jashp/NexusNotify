@@ -69,6 +69,25 @@
 			</div>
 		</div>
 	<script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
-
+	<script type="text/javascript">
+		$("#register-form").submit(function(event){
+			event.preventDefault();
+			var $form = $(this);
+			$inputs = $form.find("input, select, button, textarea");
+			var serializedData = $form.serialize();
+			$inputs.attr("disabled", "disabled");
+			$.ajax({
+				url: "/add",
+				type: "post",
+				data: serializedData,
+				success: function(response, textStatus, jqXHR){
+					$form.hide();
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+					$inputs.removeAttr("disabled");
+				},
+			});
+		});
+	</script>
   </body>
 </html>
