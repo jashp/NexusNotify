@@ -72,6 +72,33 @@
 		</div>
 	<script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
+		function emailValid(email) {
+			var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+			return regex.test(email);
+		}
+		function subscribeValid() {
+			var valid = true;
+			var errorMsg = "";
+			var lineBreak = "\n";
+
+			if (!emailValid($("#inputEmailId").val())) {
+				valid = false;
+				errorMsg = errorMsg + "Please enter a valid email address." + lineBreak;
+			}
+			
+			if (!($('#inputVersionId1').prop('checked') || $('#inputVersionId2').prop('checked') || $('#inputVersionId3').prop('checked'))) {
+				valid = false;
+				errorMsg = errorMsg + "You must select at least one device." + lineBreak;
+			}
+			
+
+			if (!valid) {
+				showAlert($("#info-error"), errorMsg);
+				return false;
+			} else {
+				return true;
+			}		
+		}		
 		function showAlert(alertBox, message) {
 			$(".alert").hide();
 			alertBox.text(message);
@@ -79,6 +106,9 @@
 		}
 		$("#register-form").submit(function(event){
 			event.preventDefault();
+			if (!subscribeValid()) {
+				return;
+			}
 			var $form = $(this);
 			$inputs = $form.find("input, select, button, textarea");
 			var serializedData = $form.serialize();
