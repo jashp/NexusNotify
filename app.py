@@ -20,6 +20,14 @@ def add():
 	db.commit()
 	return "OK"
 
+@app.route('/unsubscribe', methods=["POST"])
+def remove():
+	email = request.form["inputEmail"]
+	c = db.cursor()
+	c.execute("UPDATE emails SET unsubscribe=1 WHERE email = %s", email)
+	db.commit()
+	return "OK"
 
 if __name__ == '__main__':
-    app.run()
+	app.debug = True
+	app.run()

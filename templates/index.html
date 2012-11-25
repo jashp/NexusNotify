@@ -68,7 +68,29 @@
 						<img alt="Nexus 4" src="/static/img/n4-product-hero.png">
 					</div>
 				</div>
+				<a href="#unsubscribe-modal" role="button" data-toggle="modal">Unsubscribe</a>
 			</div>
+		</div>
+		<div id="unsubscribe-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3>Unsubsribe</h3>
+			</div>
+				<div class="modal-body">
+					<div id="info-error-modal" class="alert alert-error hide"></div>
+					<form id="unsubscribe-form" class="form-horizontal">
+						<div class="control-group">
+							<label class="control-label" for="inputEmailUnsubscribeId">Email</label>
+							<div class="controls">
+								<input type="text" id="inputEmailUnsubscribeId" name="inputEmail" placeholder="Email">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="unsubscribe-submit" type="submit" class="btn btn-primary">Submit</button>  
+					<button id="unsubscribe-cancel" class="btn" data-dismiss="modal">Cancel</button>  
+				</div>
 		</div>
 	<script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
@@ -127,6 +149,49 @@
 				},
 			});
 		});
+
+		function unsubscribeValid() {
+			if (!emailValid($("#inputEmailUnsubscribeId").val())) {
+				showAlert($("#info-error-modal"), "Please enter a valid email address.");
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+
+		$("#unsubscribe-submit").click(function(){
+			$("#unsubscribe-form").submit();
+		});
+		
+		$("#unsubscribe-cancel").click(function(){
+			ajaxRequest.abort();
+			$("#unsubscribe-form, #unsubscribe-submit").find("input, select, button, textarea").removeAttr("disabled");
+		});
+		$("#unsubscribe-form").submit(function(event){
+			event.preventDefault();
+			if (!unsubscribeValid()) {
+				return;
+			}
+			$inputs = $("#unsubscribe-form, #unsubscribe-submit").find("input, select, button, textarea");
+			var serializedData = $(this).serialize();
+			$inputs.attr("disabled", "disabled");
+			ajaxRequest = $.ajax({
+				url: "unsubscribe",
+				type: "post",
+				data: serializedData,
+				success: function(response, textStatus, jqXHR){
+					$('#unsubscribe-modal').modal('hide');
+					showAlert($("#info-success"), "It worked! You've been unsubscribed.");
+					$inputs.removeAttr("disabled");
+					
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+					showAlert($("#info-error-modal"), jqXHR.responseText);
+					$inputs.removeAttr("disabled");
+				},
+			});
+		});	
 	</script>
   </body>
 </html>
