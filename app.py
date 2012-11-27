@@ -1,13 +1,25 @@
 from flask import *
 import MySQLdb
 from local_settings import *
+from recaptcha import *
+from flask_wtf import Form, RecaptchaField
+from wtforms import *
+from wtforms.validators import DataRequired, Email
 
 app = Flask(__name__)
 db = MySQLdb.connect(host=DB_HOST,user=DB_USER,passwd=DB_PASS,db=DB_NAME)
 
+
+class AddForm(Form):
+	email = TextField('email', validators=[DataRequired(), Email()])
+	location = SelectField('location', choices=[(0, 'United States'), (1, 'Canada')], validators=[DataRequired(), Email()])
+	devices = SelectMultipleField('devices', choices=[(0, 'Nexus 4 (8gb)'), (1, 'Nexus 4 (16gb)')], option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
+
+
 @app.route('/')
 def hello_world():
-    return render_template('index.html', name=None)
+	form = AddForm()
+	return render_template('index.html', form=form)
 
 @app.route('/add', methods=['POST'])
 def add():

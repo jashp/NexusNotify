@@ -33,32 +33,31 @@
 							<div class="control-group">
 								<label class="control-label" for="inputEmailId">Email</label>
 								<div class="controls">
-									<input type="text" id="inputEmailId" name="inputEmail" placeholder="Email">
+									{{ form.email(size=20) }}
 								</div>
 							</div>
 					
 							<div class="control-group">
 								<label class="control-label" for="inputVersionId">Device(s)</label>
 								<div class="controls">
-									<label class="checkbox inline">
-										<input type="checkbox" id="inputVersionId1" name="inputVersion[]" value="0">Nexus 4 (8gb)
-									</label>
-									<label class="checkbox inline">
-										<input type="checkbox" id="inputVersionId2" name="inputVersion[]" value="1">Nexus 4 (16gb)
-									</label>
+									{{ form.devices }}
 								</div>
 							</div>
 					
 							<div class="control-group">
 								<label class="control-label" for="inputLocationId">Location</label>
 								<div class="controls">
-									<select id="inputLocationId" name="inputLocation">
-										<option value="0">United States</option>
-										<option value="1">Canada</option>
-									</select>
+									{{ form.location }}
 								</div>
 							</div>
-										
+
+							<div class="control-group">
+								<label class="control-label" for="captcha">Captcha</label>
+								<div class="controls">
+									{{ form.recaptcha }}
+								</div>
+							</div>
+
 							<div class="form-actions">  
 								<button type="submit" class="btn btn-primary">Submit</button>  
 							</div>  
