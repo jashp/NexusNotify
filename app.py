@@ -17,7 +17,7 @@ db = MySQLdb.connect(host=DB_HOST,user=DB_USER,passwd=DB_PASS,db=DB_NAME)
 class AddForm(Form):
 	email = TextField('email', validators=[DataRequired(), Email()])
 	location = SelectField('location', choices=[(0, 'United States'), (1, 'Canada')], validators=[DataRequired(), Email()])
-	devices = SelectMultipleField('devices', choices=[(0, 'Nexus 4 (8gb)'), (1, 'Nexus 4 (16gb)')], option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
+	versions = SelectMultipleField('versions', choices=[(0, 'Nexus 4 (8gb)'), (1, 'Nexus 4 (16gb)')], option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
 	recaptcha = RecaptchaField()
 
 @app.route('/')
@@ -28,7 +28,7 @@ def hello_world():
 @csrf.exempt
 @app.route('/add', methods=['POST'])
 def add():
-	versions = request.form.getlist("devices")
+	versions = request.form.getlist("versions")
 	email = request.form["email"]
 	location = request.form["location"]
 	num_versions = len(versions)
