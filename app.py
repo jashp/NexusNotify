@@ -5,11 +5,13 @@ from recaptcha import *
 from flask_wtf import Form, RecaptchaField
 from wtforms import *
 from wtforms.validators import DataRequired, Email
+from flask_wtf.csrf import CsrfProtect
 
 app = Flask(__name__)
 app.config["RECAPTCHA_PUBLIC_KEY"] = RECAPTCHA_PUBLIC_KEY
 app.config["RECAPTCHA_PRIVATE_KEY"] = RECAPTCHA_PRIVATE_KEY
 app.debug = DEBUG
+csrf = CsrfProtect()
 db = MySQLdb.connect(host=DB_HOST,user=DB_USER,passwd=DB_PASS,db=DB_NAME)
 
 class AddForm(Form):
@@ -23,11 +25,12 @@ def hello_world():
 	form = AddForm()
 	return render_template('index.html', form=form)
 
+@csrf.exempt
 @app.route('/add', methods=['POST'])
 def add():
-	versions = request.form.getlist("inputVersion[]")
-	email = request.form["inputEmail"]
-	location = request.form["inputLocation"]
+	versions = request.form.getlist("devices")
+	email = request.form["email"]
+	location = request.form["location"]
 	num_versions = len(versions)
 	c = db.cursor()
 	c.executemany("INSERT INTO emails (email, location, version) VALUES (%s, %s,%s) ON DUPLICATE KEY UPDATE sent=0, unsubscribe=0", zip([email]*num_versions, [location]*num_versions, versions))
