@@ -7,14 +7,15 @@ from wtforms import *
 from wtforms.validators import DataRequired, Email
 
 app = Flask(__name__)
+app.config["RECAPTCHA_PUBLIC_KEY"] = "6LcG1LwSAAAAAHoZPbeEEIrauVy-vToZMgp46W1z"
+app.config["RECAPTCHA_PRIVATE_KEY"] = "6LcG1LwSAAAAAPvYkYNJgLMspuja3dUJltUXO-bo"
 db = MySQLdb.connect(host=DB_HOST,user=DB_USER,passwd=DB_PASS,db=DB_NAME)
-
 
 class AddForm(Form):
 	email = TextField('email', validators=[DataRequired(), Email()])
 	location = SelectField('location', choices=[(0, 'United States'), (1, 'Canada')], validators=[DataRequired(), Email()])
 	devices = SelectMultipleField('devices', choices=[(0, 'Nexus 4 (8gb)'), (1, 'Nexus 4 (16gb)')], option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
-
+	recaptcha = RecaptchaField()
 
 @app.route('/')
 def hello_world():
@@ -42,4 +43,5 @@ def remove():
 
 if __name__ == '__main__':
 	app.debug = True
+	app.testing = True
 	app.run()
