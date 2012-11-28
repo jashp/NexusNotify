@@ -23,7 +23,7 @@ class AddForm(Form):
 @app.route('/')
 def hello_world():
 	form = AddForm()
-	return render_template('index.html', form=form)
+	return render_template('index.html', form=form, debug=app.debug)
 
 @csrf.exempt
 @app.route('/add', methods=['POST'])
