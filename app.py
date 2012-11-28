@@ -7,8 +7,9 @@ from wtforms import *
 from wtforms.validators import DataRequired, Email
 
 app = Flask(__name__)
-app.config["RECAPTCHA_PUBLIC_KEY"] = "6LcG1LwSAAAAAHoZPbeEEIrauVy-vToZMgp46W1z"
-app.config["RECAPTCHA_PRIVATE_KEY"] = "6LcG1LwSAAAAAPvYkYNJgLMspuja3dUJltUXO-bo"
+app.config["RECAPTCHA_PUBLIC_KEY"] = RECAPTCHA_PUBLIC_KEY
+app.config["RECAPTCHA_PRIVATE_KEY"] = RECAPTCHA_PRIVATE_KEY
+app.debug = True
 db = MySQLdb.connect(host=DB_HOST,user=DB_USER,passwd=DB_PASS,db=DB_NAME)
 
 class AddForm(Form):
@@ -42,6 +43,4 @@ def remove():
 	return "OK"
 
 if __name__ == '__main__':
-	app.debug = True
-	app.testing = True
 	app.run()
