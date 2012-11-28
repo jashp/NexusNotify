@@ -102,12 +102,12 @@
 			var errorMsg = "";
 			var lineBreak = "\n";
 
-			if (!emailValid($("#inputEmailId").val())) {
+			if (!emailValid($("#email").val())) {
 				valid = false;
 				errorMsg = errorMsg + "Please enter a valid email address." + lineBreak;
 			}
 			
-			if (!($('#inputVersionId1').prop('checked') || $('#inputVersionId2').prop('checked') || $('#inputVersionId3').prop('checked'))) {
+			if (!($('#devices-0').prop('checked') || $('#devices-1').prop('checked') || $('#devices-2').prop('checked'))) {
 				valid = false;
 				errorMsg = errorMsg + "You must select at least one device." + lineBreak;
 			}
