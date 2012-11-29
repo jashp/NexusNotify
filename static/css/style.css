@@ -1,0 +1,48 @@
+.aux, .main {
+	margin: 15px auto;
+	max-width: 1000px;
+}
+.hero .image {
+	float: right;
+	width: 50%;
+}
+
+.hero .content {
+	float: left;
+	width: 50%;
+}
+
+body {
+	color: #555;
+	font: normal 15px "Open Sans Condensed",arial,sans-serif;
+}
+
+
+ul#versions {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+ul#versions li {
+	margin-bottom: 5px;
+}
+
+
+#versions li input {
+	display: inline;
+	vertical-align: top;
+
+}
+
+#versions li label {
+	display: inline;
+}
+
+.form-horizontal .control-label {
+	width: 80px;
+}
+
+.form-horizontal .controls {
+ margin-left: 100px;
+}
