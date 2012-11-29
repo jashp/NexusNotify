@@ -4,7 +4,7 @@ from local_settings import *
 from recaptcha import *
 from flask_wtf import Form, RecaptchaField
 from wtforms import *
-from wtforms.validators import DataRequired, Email
+from wtforms.validators import *
 from flask_wtf.csrf import CsrfProtect
 
 app = Flask(__name__)
@@ -15,10 +15,9 @@ csrf = CsrfProtect()
 db = MySQLdb.connect(host=DB_HOST,user=DB_USER,passwd=DB_PASS,db=DB_NAME)
 
 class AddForm(Form):
-	email = TextField('email', validators=[DataRequired(), Email()])
-	location = SelectField('location', choices=[(0, 'United States'), (1, 'Canada')], validators=[DataRequired(), Email()])
-	versions = SelectMultipleField('versions', choices=[(0, 'Nexus 4 (8gb)'), (1, 'Nexus 4 (16gb)')], option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
-	recaptcha = RecaptchaField()
+	email = TextField('email', validators=[Required(), Email()])
+	location = SelectField('location', choices=[('0', 'United States'), ('1', 'Canada')], validators=[Required()])
+	versions = SelectMultipleField('versions', choices=[('0', 'Nexus 4 (8gb)'), ('1', 'Nexus 4 (16gb)')], option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False) , validators=[Required()])
 
 @app.route('/')
 def hello_world():
@@ -29,6 +28,9 @@ def hello_world():
 @app.route('/add', methods=['POST'])
 def add():
 	form = AddForm(request.form)
+	if not form.validate():
+		abort(400)
+
 	versions = form.versions.data
 	email = form.email.data
 	location = form.location.data
