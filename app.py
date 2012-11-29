@@ -28,9 +28,10 @@ def hello_world():
 @csrf.exempt
 @app.route('/add', methods=['POST'])
 def add():
-	versions = request.form.getlist("versions")
-	email = request.form["email"]
-	location = request.form["location"]
+	form = AddForm(request.form)
+	versions = form.versions.data
+	email = form.email.data
+	location = form.location.data
 	num_versions = len(versions)
 	c = db.cursor()
 	c.executemany("INSERT INTO emails (email, location, version) VALUES (%s, %s,%s) ON DUPLICATE KEY UPDATE sent=0, unsubscribe=0", zip([email]*num_versions, [location]*num_versions, versions))
