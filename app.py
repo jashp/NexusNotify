@@ -18,7 +18,9 @@ class AddForm(Form):
 	email = TextField('email', validators=[Required(), Email()])
 	location = SelectField('location', choices=[('0', 'United States'), ('1', 'Canada')], validators=[Required()])
 	versions = SelectMultipleField('versions', choices=[('0', 'Nexus 4 (8gb)'), ('1', 'Nexus 4 (16gb)')], option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False) , validators=[Required()])
-
+	if not app.debug:
+		recaptcha = RecaptchaField()
+		
 @app.route('/')
 def hello_world():
 	form = AddForm()

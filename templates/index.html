@@ -143,7 +143,7 @@
 					$form.hide();
 				},
 				error: function(jqXHR, textStatus, errorThrown){
-					showAlert($("#info-error"), jqXHR.responseText);
+					showAlert($("#info-error"), "Something went wrong. Maybe you entered the captcha incorrectly?");
 					$inputs.removeAttr("disabled");
 				},
 			});
