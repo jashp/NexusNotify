@@ -80,9 +80,9 @@
 					<div id="info-error-modal" class="alert alert-error hide"></div>
 					<form id="unsubscribe-form" class="form-horizontal">
 						<div class="control-group">
-							<label class="control-label" for="inputEmailUnsubscribeId">Email</label>
+							<label class="control-label" for="email">Email</label>
 							<div class="controls">
-								<input type="text" id="inputEmailUnsubscribeId" name="inputEmail" placeholder="Email">
+								{{ form.email(size=20) }}
 							</div>
 						</div>
 					</form>
@@ -103,7 +103,7 @@
 			var errorMsg = "";
 			var lineBreak = "\n";
 
-			if (!emailValid($("#email").val())) {
+			if (!emailValid($("#register-form #email").val())) {
 				valid = false;
 				errorMsg = errorMsg + "Please enter a valid email address." + lineBreak;
 			}
@@ -151,7 +151,7 @@
 		});
 
 		function unsubscribeValid() {
-			if (!emailValid($("#inputEmailUnsubscribeId").val())) {
+			if (!emailValid($("#unsubscribe-form #email").val())) {
 				showAlert($("#info-error-modal"), "Please enter a valid email address.");
 				return false;
 			} else {
@@ -177,7 +177,7 @@
 			var serializedData = $(this).serialize();
 			$inputs.attr("disabled", "disabled");
 			ajaxRequest = $.ajax({
-				url: "unsubscribe",
+				url: "/remove",
 				type: "post",
 				data: serializedData,
 				success: function(response, textStatus, jqXHR){

@@ -20,11 +20,13 @@ class AddForm(Form):
 	versions = SelectMultipleField('versions', choices=[('0', 'Nexus 4 (8gb)'), ('1', 'Nexus 4 (16gb)')], option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False) , validators=[Required()])
 	if not app.debug:
 		recaptcha = RecaptchaField()
+
+class RemoveForm(Form):
+	email = TextField('email', validators=[Required(), Email()])
 		
 @app.route('/')
 def hello_world():
-	form = AddForm()
-	return render_template('index.html', form=form, debug=app.debug)
+	return render_template('index.html', form=AddForm(), removeForm=RemoveForm(), debug=app.debug)
 
 @csrf.exempt
 @app.route('/add', methods=['POST'])
@@ -42,9 +44,13 @@ def add():
 	db.commit()
 	return "OK"
 
-@app.route('/unsubscribe', methods=["POST"])
+@app.route('/remove', methods=["POST"])
 def remove():
-	email = request.form["inputEmail"]
+	form = RemoveForm(request.form)
+	if not form.validate():
+		abort(400)
+
+	email = form.email.data
 	c = db.cursor()
 	c.execute("UPDATE emails SET unsubscribe=1 WHERE email = %s", email)
 	db.commit()
