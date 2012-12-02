@@ -30,6 +30,8 @@ function showAlert(alertBox, message) {
 	alertBox.text(message);
 	alertBox.show();
 }
+
+var ajaxRequest;
 $("#register-form").submit(function(event){
 	event.preventDefault();
 	if (!subscribeValid()) {
@@ -69,7 +71,9 @@ $("#unsubscribe-submit").click(function(){
 });
 
 $("#unsubscribe-cancel").click(function(){
-	ajaxRequest.abort();
+	event.preventDefault();
+	if (ajaxRequest != undefined)
+		ajaxRequest.abort();
 	$("#unsubscribe-form, #unsubscribe-submit").find("input, select, button, textarea").removeAttr("disabled");
 });
 $("#unsubscribe-form").submit(function(event){
