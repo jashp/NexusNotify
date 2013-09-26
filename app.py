@@ -1,7 +1,6 @@
 from flask import *
-import MySQLdb
+#import MySQLdb
 from local_settings import *
-from recaptcha import *
 from flask_wtf import Form, RecaptchaField
 from wtforms import *
 from wtforms.validators import *
