@@ -12,7 +12,7 @@ app.config["RECAPTCHA_PUBLIC_KEY"] = RECAPTCHA_PUBLIC_KEY
 app.config["RECAPTCHA_PRIVATE_KEY"] = RECAPTCHA_PRIVATE_KEY
 app.debug = DEBUG
 csrf = CsrfProtect()
-db = MySQLdb.connect(host=DB_HOST,user=DB_USER,passwd=DB_PASS,db=DB_NAME)
+# db = MySQLdb.connect(host=DB_HOST,user=DB_USER,passwd=DB_PASS,db=DB_NAME)
 
 class AddForm(Form):
 	email = TextField('email', validators=[Required(), Email()])
@@ -39,9 +39,9 @@ def add():
 	email = form.email.data
 	location = form.location.data
 	num_versions = len(versions)
-	c = db.cursor()
-	c.executemany("INSERT INTO emails (email, location, version) VALUES (%s, %s,%s) ON DUPLICATE KEY UPDATE sent=0, unsubscribe=0", zip([email]*num_versions, [location]*num_versions, versions))
-	db.commit()
+	# c = db.cursor()
+	# c.executemany("INSERT INTO emails (email, location, version) VALUES (%s, %s,%s) ON DUPLICATE KEY UPDATE sent=0, unsubscribe=0", zip([email]*num_versions, [location]*num_versions, versions))
+	# db.commit()
 	return "OK"
 
 @app.route('/remove', methods=["POST"])
@@ -51,9 +51,9 @@ def remove():
 		abort(400)
 
 	email = form.email.data
-	c = db.cursor()
-	c.execute("UPDATE emails SET unsubscribe=1 WHERE email = %s", email)
-	db.commit()
+	# c = db.cursor()
+	# c.execute("UPDATE emails SET unsubscribe=1 WHERE email = %s", email)
+	# db.commit()
 	return "OK"
 
 if __name__ == '__main__':
