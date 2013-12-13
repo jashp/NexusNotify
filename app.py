@@ -1,3 +1,4 @@
+from werkzeug.contrib.fixers import ProxyFix
 from flask import *
 #import MySQLdb
 from local_settings import *
@@ -10,6 +11,7 @@ app = Flask(__name__)
 app.config["RECAPTCHA_PUBLIC_KEY"] = RECAPTCHA_PUBLIC_KEY
 app.config["RECAPTCHA_PRIVATE_KEY"] = RECAPTCHA_PRIVATE_KEY
 app.debug = DEBUG
+app.wsgi_app = ProxyFix(app.wsgi_app)
 csrf = CsrfProtect()
 # db = MySQLdb.connect(host=DB_HOST,user=DB_USER,passwd=DB_PASS,db=DB_NAME)
 
